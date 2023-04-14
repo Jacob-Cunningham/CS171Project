@@ -1,18 +1,47 @@
 """
 GameState object represents one possible state of the board.
+GameState() takes a 2 dimensional list and uses 0 to represent the blank space
 goalTest() returns True if the board is in a goal state
-moveLeft(), moveRight(), moveUp(), moveDown() return the new GameState when the action is completed, or None if the move is invalid
-getMoves() returns a list of the moves in case you want to iterate over them
+moveLeft(), moveRight(), moveUp(), moveDown() return the new GameState when the action is completed, or None if the move is invalid (might make these private)
+getMoves() returns the list of reachable states from the current one
+h() is a virtual function to represent the heuristic offset
 """
 from collections import deque
+from copy import deepcopy
 class GameState:
   state = []
   blankPos = (0,0)
+
+
   def __init__(self, state):
     self.state = state
     for row in range(0, len(state)): #get blankPos 
       for item in range(0, len(state[row])):
-        if state[row][item] == 0: self.blankPos = (row, item)
+        if state[row][item] == 0: self.blankPos = (item, row)
+
+
+  def __str__(self):
+      toStr = ""
+      for line in self.state:
+        toStr += str(line) + '\n'
+      return toStr
+
+
+  def __eq__(self, rhs):
+      if rhs.__class__ == GameState: return self.state == rhs.state
+      else: return False
+
+
+  def __hash__(self):
+    hash = 0
+    offset = 1
+    for row in self.state:
+      for item in row:
+        hash += item * offset
+        offset *= 9
+    return hash
+
+
   def goalTest(self):
     tileOrder = deque(range(1, len(self.state)*len(self.state[0])))
     for row in self.state:
@@ -21,9 +50,46 @@ class GameState:
         elif item == tileOrder[0]: tileOrder.popleft()
         else: return False
     return True
+
+
+  def moveLeft(self):
+    return self.__move((-1,0))
+  
+  
+  def moveRight(self):
+    return self.__move((1,0))
+  
+  
+  def moveUp(self):
+    return self.__move((0,-1))
+  
+  
+  def moveDown(self):
+    return self.__move((0,1))
+
+
+  def getMoves(self):
+    possibleMoves = []
+    for func in [self.moveLeft, self.moveRight, self.moveUp, self.moveDown]:
+      if func() != None: possibleMoves.append(func())
+    return possibleMoves
+
+
+  def h(self):
+    pass
+
+
+  def __swapCells(self, cell1, cell2):
+    tmp = self.state[cell1[1]][cell1[0]]
+    self.state[cell1[1]][cell1[0]] = self.state[cell2[1]][cell2[0]]
+    self.state[cell2[1]][cell2[0]] = tmp
+
+
   def __move(self, direction): #private function for generalized move logic
-    if self.blankPos[0] <= 0 or self.blankPos[0] >= len(self.state[0]) - 1: return None
-    if self.blankPos[1] <= 0 or self.blankPos[1] >= len(self.state) - 1: return None #out of bounds checking
-    newBlankPos = self.blankPos + direction
-    newState = GameState(self.state)
+    newGameState = deepcopy(self)
+    newGameState.blankPos = (newGameState.blankPos[0] + direction[0], newGameState.blankPos[1] + direction[1])
+    if newGameState.blankPos[0] < 0 or newGameState.blankPos[0] >= len(self.state[0]): return None
+    if newGameState.blankPos[1] < 0 or newGameState.blankPos[1] >= len(self.state): return None #out of bounds checking
+    newGameState.__swapCells(self.blankPos, newGameState.blankPos)
+    return newGameState
     
