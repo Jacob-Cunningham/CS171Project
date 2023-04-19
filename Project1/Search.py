@@ -8,7 +8,7 @@ class Search:
         self.startState = startState
         self.h = h
     
-    def search(self):
+    def search(self, display = False):
         frontier = PriorityQueue()
         frontier.put((self.h(self.startState), self.startState))
         checkedStates = set()
@@ -16,6 +16,10 @@ class Search:
 
         while not frontier.empty():
             currentNode = frontier.get()[1] #choose a leaf node and remove it from the frontier
+            if display:
+                print("Expanding best node with g(n) =", currentNode.depth, "and h(n) =", self.h(currentNode))
+                print(currentNode)
+                input()
             if currentNode.goalTest(): #if leaf node contains a goal state then return the solution
                 return currentNode
             checkedStates.add(currentNode) #add the node to the explored set
