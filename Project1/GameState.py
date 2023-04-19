@@ -11,7 +11,8 @@ from copy import deepcopy
 class GameState:
   state = []
   blankPos = (0,0)
-
+  parent = None
+  depth = 0
 
   def __init__(self, state):
     self.state = state
@@ -30,6 +31,10 @@ class GameState:
   def __eq__(self, rhs):
       if rhs.__class__ == GameState: return self.state == rhs.state
       else: return False
+
+
+  def __lt__(self, rhs): 
+    return False #This is a workaround for the queue. If two items have the same priority it doesn't matter which comes first.
 
 
   def __hash__(self):
@@ -91,5 +96,7 @@ class GameState:
     if newGameState.blankPos[0] < 0 or newGameState.blankPos[0] >= len(self.state[0]): return None
     if newGameState.blankPos[1] < 0 or newGameState.blankPos[1] >= len(self.state): return None #out of bounds checking
     newGameState.__swapCells(self.blankPos, newGameState.blankPos)
+    newGameState.parent = self
+    newGameState.depth = self.depth + 1
     return newGameState
     
