@@ -1,4 +1,6 @@
-import searchAlgorthims 
+from searchAlgorthims import *
+from Search import Search
+from GameState import GameState
 
 def finalResultStatement(expantionTotal, queueMax, goalDepth):
     print(f"To solve this problem the search algorthim expanded a total of {expantionTotal} nodes.")
@@ -45,17 +47,20 @@ def mainMenu():
 
 ####This bit get user to pick a search algorithm and solves the puzzle
     goalMatrix= [[1,2,3],[4,5,6],[7,8,0]] #this is the goal state matrix we want to reach
+    state = GameState(matrix)
+    def h(state):
+        return 0
 
     while True:
         algoChoice = input("Enter your choice of algorithm \n   Uniform Cost Search (1) \n   A* with the Misplaced Tile heuristic (2) \n   A* with the Euclidean distance heuristic (3)")
         if algoChoice == '1':
-            expantionTotal, queueMax, goalDepth= searchAlgorthims.uniformCostSearch(matrix,goalMatrix)
+            expantionTotal, queueMax, goalDepth= Search(state, h).search(True)
             break
         elif algoChoice == '2':
-            expantionTotal, queueMax, goalDepth= searchAlgorthims.MisplacedTile(matrix)
+            expantionTotal, queueMax, goalDepth= Search(state,misplacedTile).search(True)
             break
         elif  algoChoice =='3':
-            expantionTotal, queueMax, goalDepth= searchAlgorthims.EuclideanDistance(matrix)
+            expantionTotal, queueMax, goalDepth= Search(state,euclideanDistance).search(True)
             break
         else:
             print("Invalid input, please try inputs '1' or '2' or '3'")

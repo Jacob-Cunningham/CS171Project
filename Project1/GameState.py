@@ -15,6 +15,7 @@ class GameState:
   depth = 0
 
   def __init__(self, state):
+    self._i = 0
     self.state = state
     for row in range(0, len(state)): #get blankPos 
       for item in range(0, len(state[row])):
@@ -36,6 +37,23 @@ class GameState:
   def __lt__(self, rhs): 
     return False #This is a workaround for the queue. If two items have the same priority it doesn't matter which comes first.
 
+  def __len__(self):
+    return len(self.state)
+  
+  def __iter__(self):
+    return self
+  
+  def __next__(self):
+    if self._i >= len(self.state):
+      raise StopIteration
+    next_item = self.state[self._i]
+    self._i += 1
+    return next_item
+  
+  # allows for indexing of GameState object
+  def __getitem__(self, index):
+    return self.state[index]
+    
 
   def __hash__(self):
     hash = 0
