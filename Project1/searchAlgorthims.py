@@ -7,7 +7,6 @@ import Search
 def misplacedTile(state):
     misplaced = 0
     goalState = [[1,2,3],[4,5,6],[7,8,0]]
-    print(state)
     for i in range(len(state)):
         for j in range(len(iter(state))):
             if state[i][j] != goalState[i][j] and state[i][j] != 0:
