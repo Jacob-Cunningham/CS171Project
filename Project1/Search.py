@@ -27,8 +27,8 @@ class Search:
                 return expanded, numInQueue, currentNode.depth, 
             checkedStates.add(currentNode) #add the node to the explored set
             for state in currentNode.getMoves(): #expand the chosen node
-                expanded += 1;
                 if state not in checkedStates and state not in inFrontier: #only if not in the frontier or explored set
+                    expanded += 1;
                     frontier.put((self.h(state) + state.depth, state)) #adding the resulting nodes to the frontier 
                     inFrontier.add(state)
                     numInQueue += 1;
