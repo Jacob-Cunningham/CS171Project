@@ -14,22 +14,23 @@ class Search:
         checkedStates = set()
         inFrontier = set()
         expanded = 0;
-        numInQueue = 1;
+        maxNodes = 0;
+        numNodes = 0;
 
         while not frontier.empty():
             currentNode = frontier.get()[1] #choose a leaf node and remove it from the frontier
-            numInQueue -= 1;
             if display:
                 print("Expanding best node with g(n) =", currentNode.depth, "and h(n) =", self.h(currentNode))
                 print(currentNode)
                 input()
             if currentNode.goalTest(): #if leaf node contains a goal state then return the solution
-                return expanded, numInQueue, currentNode.depth, 
+                return expanded, maxNodes, currentNode.depth, 
             checkedStates.add(currentNode) #add the node to the explored set
             for state in currentNode.getMoves(): #expand the chosen node
                 if state not in checkedStates and state not in inFrontier: #only if not in the frontier or explored set
                     expanded += 1;
                     frontier.put((self.h(state) + state.depth, state)) #adding the resulting nodes to the frontier 
                     inFrontier.add(state)
-                    numInQueue += 1;
+                    numNodes = frontier.qsize()
+                    maxNodes = max(numNodes, maxNodes)
         return None #if frontier empty then return failure
