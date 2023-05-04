@@ -2,6 +2,11 @@ from searchAlgorthims import *
 from Search import Search
 from GameState import GameState
 
+# Ainaz Estiri
+# Jacob Cunningham
+# Binh Le
+# Billy Chau: 862179537
+
 def finalResultStatement(expantionTotal, queueMax, goalDepth):
     print(f"To solve this problem the search algorthim expanded a total of {expantionTotal} nodes.")
     print(f"The maximum number of nodes in the queue at any one time: {queueMax}.")
