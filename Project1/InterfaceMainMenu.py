@@ -1,6 +1,7 @@
 from searchAlgorthims import *
 from Search import Search
 from GameState import GameState
+from TestCases import allTestCases
 
 def finalResultStatement(expantionTotal, queueMax, goalDepth):
     print(f"To solve this problem the search algorthim expanded a total of {expantionTotal} nodes.")
@@ -12,7 +13,7 @@ def mainMenu():
 ####this bit gets user input for puzzle
     print("Welcome to <insert all SIDs> 8 puzzle solver.\n")
     while True:
-        userInput = input('Type "1" to use a default puzzle, or "2" to enter your own puzzle.\n')
+        userInput = input('Type "1" to use a default puzzle, or "2" to enter your own puzzle, or "3" for all test cases\n')
         if userInput == '1':
             #IDEK WHAT IT WOULD BE YET!!!!! I think its the puzzle one on page 2?
         
@@ -39,6 +40,10 @@ def mainMenu():
             #makes a [[#,#,#],[#,#,#],[#,#,#]] matrix format
             matrix= [firstRow,secondRow,thirdRow]
             break
+        
+        elif userInput == '3':
+            allTestCases()
+            return
 
         else:
             print("Invalid input, please try again")
