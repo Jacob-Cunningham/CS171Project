@@ -10,7 +10,7 @@ def finalResultStatement(expantionTotal, queueMax, goalDepth):
 def mainMenu():
     
 ####this bit gets user input for puzzle
-    print("Welcome to <insert all SIDs> 8 puzzle solver.\n")
+    print("Welcome to 862192636, ***ADD UR SIDS*** 8 puzzle solver.\n")
     while True:
         userInput = input('Type "1" to use a default puzzle, or "2" to enter your own puzzle.\n')
         if userInput == '1':
