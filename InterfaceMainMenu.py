@@ -1,4 +1,5 @@
 import random 
+from Searches import *
 
 def mainmenu():
     print("Welcome to Ainaz Estiri, Billy Chau, Binh Le, and Jacob Cunningham Feature Selection Algorithm.")
@@ -38,6 +39,7 @@ def mainmenu():
 
     search() #include the text after the "Beginning search." inside the search function (as a universal function)
 
+
 def inputdata(input): #Reads txt inputs from profs. example.
     with open(input, 'r') as file:
         lines = file.readlines()
@@ -53,3 +55,13 @@ def inputdata(input): #Reads txt inputs from profs. example.
 #print(inputdata('very-small-test-dataset.txt')) #Testing to see if inputdata() works
 
 
+
+
+#Example data
+data = [('A', [1, 2, 3]), ('B', [4, 5, 6]), ('A', [7, 8, 9]), ('B', [10, 11, 12]), ('C', [13, 14, 15])]
+#solution = greedy_search(inputdata('very-small-test-dataset.txt'))
+solution = greedy_search(data)
+
+print("Solution:")
+for features, class_label in solution.items():
+    print(f"Features: {features}, Class: {class_label}")
