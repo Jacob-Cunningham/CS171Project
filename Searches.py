@@ -83,7 +83,7 @@ def backward_elimination(num_features, classifier, trace = False):
             if not feature in features[-1][1]: continue
             current_features = features[-1][1].difference({feature})
             accuracy = classifier.evaluate(current_features)
-            if trace: print("Features", current_features, "have accuracy", accuracy)
+            if trace: print("Features", current_features, "have accuracy", str(round(accuracy * 100, 2)) + '%')
             if accuracy > best_choice[0]:
                 best_choice = (accuracy, current_features)
         if trace: print(best_choice, "is best choice\n")

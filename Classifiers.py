@@ -1,5 +1,5 @@
-from random import randint
+from random import random
 
 class Stub_Classifier:
     def evaluate(self, features):
-        return randint(0,255)
+        return random()
