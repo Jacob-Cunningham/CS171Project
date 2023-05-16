@@ -37,3 +37,19 @@ def mainmenu():
     print("Beginning search.")
 
     search() #include the text after the "Beginning search." inside the search function (as a universal function)
+
+def inputdata(input): #Reads txt inputs from profs. example.
+    with open(input, 'r') as file:
+        lines = file.readlines()
+    data = []
+    for line in lines:
+        if line:
+            data_point = line.split()
+            class_label = data_point[0]
+            features = [float(x) for x in data_point[1:]]
+            data.append((class_label, features))
+    return data
+
+#print(inputdata('very-small-test-dataset.txt')) #Testing to see if inputdata() works
+
+
