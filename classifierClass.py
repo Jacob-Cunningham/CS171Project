@@ -17,7 +17,7 @@ class Classifier:
             if distance < minDistance:
                 minDistance = distance
                 nearestPoint = trainSample['label']
-
+            print(trainSample + " is class " + nearestPoint)
         # Return the predicted class label of the nearest training point
         return nearestPoint
 
