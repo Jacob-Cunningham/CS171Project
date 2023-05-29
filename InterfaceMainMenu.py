@@ -1,5 +1,7 @@
 import random 
 from Searches import *
+from validatorClass import *
+from classifierClass import *
 
 def mainmenu():
     print("Welcome to Ainaz Estiri, Billy Chau, Binh Le, and Jacob Cunningham Feature Selection Algorithm.")
@@ -65,3 +67,10 @@ solution = greedy_search(data)
 print("Solution:")
 for features, class_label in solution.items():
     print(f"Features: {features}, Class: {class_label}")
+
+
+# class1 = Classifier()
+# test1 = Validator(class1)
+# dataset = inputdata("small-test-dataset.txt")
+
+# print(test1.evaluate({0,1,2}, dataset))
