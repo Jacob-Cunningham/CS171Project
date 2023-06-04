@@ -1,7 +1,9 @@
 import random 
+import csv
 from Searches import *
 from validatorClass import *
-from classifierClass import *
+from classifierClass import Classifier
+
 
 def mainmenu():
     print("Welcome to Ainaz Estiri, Billy Chau, Binh Le, and Jacob Cunningham Feature Selection Algorithm.")
@@ -42,35 +44,15 @@ def mainmenu():
     search() #include the text after the "Beginning search." inside the search function (as a universal function)
 
 
-def inputdata(input): #Reads txt inputs from profs. example.
+
+def inputdata(input):
     with open(input, 'r') as file:
         lines = file.readlines()
     data = []
     for line in lines:
         if line:
             data_point = line.split()
-            class_label = data_point[0]
+            class_label = float(data_point[0])
             features = [float(x) for x in data_point[1:]]
             data.append((class_label, features))
     return data
-
-#print(inputdata('very-small-test-dataset.txt')) #Testing to see if inputdata() works
-
-
-
-
-#Example data
-data = [('A', [1, 2, 3]), ('B', [4, 5, 6]), ('A', [7, 8, 9]), ('B', [10, 11, 12]), ('C', [13, 14, 15])]
-#solution = greedy_search(inputdata('very-small-test-dataset.txt'))
-solution = greedy_search(data)
-
-print("Solution:")
-for features, class_label in solution.items():
-    print(f"Features: {features}, Class: {class_label}")
-
-
-# class1 = Classifier()
-# test1 = Validator(class1)
-# dataset = inputdata("small-test-dataset.txt")
-
-# print(test1.evaluate({0,1,2}, dataset))
