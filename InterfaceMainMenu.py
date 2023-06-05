@@ -6,7 +6,7 @@ from classifierClass import Classifier
 
 classifier = Classifier()
 
-def inputdata(input):
+def inputdata(input): #Function to accept dataset and converts them to a matrix classified by class and features
     with open(input, 'r') as file:
         lines = file.readlines()
     data = []
@@ -17,6 +17,10 @@ def inputdata(input):
             features = [float(x) for x in data_point[1:]]
             data.append((class_label, features))
     return data
+
+def featuresonly(input): #Function to remove the class in the dataset and get only the features
+    classless = [row[1:] for row in input]
+    return classless
 
 def mainmenu():
     print("Welcome to Ainaz Estiri, Billy Chau, Binh Le, and Jacob Cunningham Feature Selection Algorithm.")
@@ -58,4 +62,5 @@ def mainmenu():
     search() #include the text after the "Beginning search." inside the search function (as a universal function)
 
 
-mainmenu()
+
+
