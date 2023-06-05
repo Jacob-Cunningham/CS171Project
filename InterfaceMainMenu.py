@@ -61,6 +61,22 @@ def mainmenu():
 
     search() #include the text after the "Beginning search." inside the search function (as a universal function)
 
+dataset = inputdata("very-small-test-dataset.txt")
+features = featuresonly(dataset)
+validator = Validator(classifier)
 
+# trying to get indices
+def getFeatureSubset(feat):
+    featSubset = set()
+    for i in range(len(feat)):
+        for j in range(len(feat)):
+            # print(j)
+            featSubset.add(j)
+            # print(featSubset)
+    return featSubset
+solution = validator.evaluate(getFeatureSubset(features), dataset)
+print(solution)
+# print(getFeatureSubset(features))
+# print(dataset)
 
 
