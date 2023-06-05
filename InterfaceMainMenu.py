@@ -4,6 +4,19 @@ from Searches import *
 from validatorClass import *
 from classifierClass import Classifier
 
+classifier = Classifier()
+
+def inputdata(input):
+    with open(input, 'r') as file:
+        lines = file.readlines()
+    data = []
+    for line in lines:
+        if line:
+            data_point = line.split()
+            class_label = float(data_point[0])
+            features = [float(x) for x in data_point[1:]]
+            data.append((class_label, features))
+    return data
 
 def mainmenu():
     print("Welcome to Ainaz Estiri, Billy Chau, Binh Le, and Jacob Cunningham Feature Selection Algorithm.")
@@ -25,6 +38,7 @@ def mainmenu():
     while True:
         algorithm = input()
         if algorithm =='1':
+            forward_selection(numFeatures, classifier)
             break
         elif algorithm =='2':
             break
@@ -38,21 +52,10 @@ def mainmenu():
 
 
     #i think this is what she wants?
-    print(f"Using no features and 'random' evaluation, I get an accuracy of {random.uniform(0, 100):.1f}%") 
+    print("Using no features and 'random' evaluation, I get an accuracy of {random.uniform(0, 100):.1f}%") 
     print("Beginning search.")
 
     search() #include the text after the "Beginning search." inside the search function (as a universal function)
 
 
-
-def inputdata(input):
-    with open(input, 'r') as file:
-        lines = file.readlines()
-    data = []
-    for line in lines:
-        if line:
-            data_point = line.split()
-            class_label = float(data_point[0])
-            features = [float(x) for x in data_point[1:]]
-            data.append((class_label, features))
-    return data
+mainmenu()
