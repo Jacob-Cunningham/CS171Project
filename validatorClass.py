@@ -1,40 +1,38 @@
+from classifierClass import Classifier
 class Validator:
-    def __init__(self, classifier):
-        self.classifier = classifier
-
-    def evaluate(self, featureSubset, dataset):
-        # Filter the dataset to include only the selected features
-        filteredDataset = self.filterDataset(featureSubset, dataset)
+    def __init__(self):
+        self.classifier = Classifier()
+    
+    def evaluate(self, featureSubset, dataset, trace=False):
 
         # Train the classifier on the filtered dataset
-        self.classifier.train(filteredDataset)
+        accuracy = 0
 
-        # Evaluate the accuracy of the classifier on the filtered dataset
-        accuracy = self.calculateAccuracy(filteredDataset)
+        for instance in range(len(dataset)):
+            self.classifier = Classifier()
+            self.classifier.train(dataset[:instance])
+            self.classifier.train(dataset[instance + 1:])
+            accuracy += self.calculateAccuracy(dataset[instance], featureSubset, trace)
 
-        return accuracy
+        return accuracy / len(dataset)
 
-    def filterDataset(self, featureSubset, dataset):
-        # Filter the dataset to include only the selected features
-        filteredDataset = []
-        for instance in dataset:
-            filteredInstance = {}
-            for feature in featureSubset:
-                filteredInstance[feature] = instance[feature]
-            filteredInstance['label'] = instance['label']
-            filteredDataset.append(filteredInstance)
-        return filteredDataset
+    def calculateAccuracy(self, toTest, featureSubset, trace):
+        predictedLabel = self.classifier.test(toTest, featureSubset)
+        if trace: print("predicting label", predictedLabel, "for instance", toTest.label)
+        if predictedLabel == toTest.label:
+            return 1
+        return 0
 
-    def calculateAccuracy(self, dataset):
-        # Calculate the accuracy of the classifier on the given dataset
-        correctPredictions = 0
-        totalInstances = len(dataset)
-
-        for instance in dataset:
-            predictedLabel = self.classifier.test(instance)
-            if predictedLabel == instance['label']:
-                correctPredictions += 1
-
-        accuracy = correctPredictions / totalInstances
-
-        return accuracy
+    #def calculateAccuracy(self, dataset, featureSubset):
+    #    # Calculate the accuracy of the classifier on the given dataset
+    #    correctPredictions = 0
+    #    totalInstances = len(dataset)
+#
+    #    for instance in dataset: #TODO leave one out
+    #        predictedLabel = self.classifier.test(instance, featureSubset)
+    #        if predictedLabel == instance.label:
+    #            correctPredictions += 1
+#
+    #    accuracy = correctPredictions / totalInstances
+#
+    #    return accuracy
